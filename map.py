@@ -33,6 +33,7 @@ collision_walls = []
 for j, row in enumerate(matrix_map):# здесь инфа о стенах добавляется
     for i, char in enumerate(row):
         if char:
+            
             mini_map.add((i * MAP_TILE, j * MAP_TILE))
             collision_walls.append(pygame.Rect(i * TILE, j * TILE, TILE, TILE))
             if char == 1:

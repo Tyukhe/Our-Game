@@ -7,7 +7,7 @@ import pygame
 from numba import njit
 
 @njit(fastmath=True, cache=True)
-def ray_casting_npc_player(npc_x, npc_y, blocked_doors, world_map, player_pos):# зрение нпс
+def ray_casting_npc_player(npc_x, npc_y, world_map, player_pos):# зрение нпс
     ox, oy = player_pos
     xm, ym = mapping(ox, oy)
     delta_x, delta_y = ox - npc_x, oy - npc_y
@@ -25,8 +25,6 @@ def ray_casting_npc_player(npc_x, npc_y, blocked_doors, world_map, player_pos):#
         depth_v = (x - ox) / cos_a
         yv = oy + depth_v * sin_a
         tile_v = mapping(x + dx, yv)
-        if tile_v in world_map or tile_v in blocked_doors:
-            return False
         x += dx * TILE
 
     # horizontals
@@ -35,7 +33,7 @@ def ray_casting_npc_player(npc_x, npc_y, blocked_doors, world_map, player_pos):#
         depth_h = (y - oy) / sin_a
         xh = ox + depth_h * cos_a
         tile_h = mapping(xh, y + dy)
-        if tile_h in world_map or tile_h in blocked_doors:
+        if tile_h in world_map:
             return False
         y += dy * TILE
     return True
@@ -54,23 +52,18 @@ class Interaction: #класс действий
                 if obj.is_on_fire[1]:
                     if obj.is_dead != 'immortal' and not obj.is_dead:
                         if ray_casting_npc_player(obj.x, obj.y,
-                                                  self.sprites.blocked_doors,
                                                   world_map, self.player.pos):
                             if obj.flag == 'npc':
                                 self.pain_sound.play()
                             obj.is_dead = True
                             obj.blocked = None
                             self.drawing.shot_animation_trigger = False
-                    if obj.flag in {'door_h', 'door_v'} and obj.distance_to_sprite < TILE:
-                        obj.door_open_trigger = True
-                        obj.blocked = None
                     break
 
     def npc_action(self): #ии нпс(действие если видит игрока)
         for obj in self.sprites.list_of_objects:
             if obj.flag == 'npc' and not obj.is_dead:
                 if ray_casting_npc_player(obj.x, obj.y,
-                                          self.sprites.blocked_doors,
                                           world_map, self.player.pos):
                     obj.npc_action_trigger = True
                     self.npc_move(obj)
@@ -84,9 +77,9 @@ class Interaction: #класс действий
             obj.x = obj.x + 1 if dx < 0 else obj.x - 1
             obj.y = obj.y + 1 if dy < 0 else obj.y - 1
 
-    def clear_world(self):#очистка инфы о нпс если их убили?
+    """def clear_world(self):#очистка инфы о нпс если их убили?
         deleted_objects = self.sprites.list_of_objects[:]
-        [self.sprites.list_of_objects.remove(obj) for obj in deleted_objects if obj.delete]
+        [self.sprites.list_of_objects.remove(obj) for obj in deleted_objects if obj.delete]"""
 
     def play_music(self): #играть музычку
         pygame.mixer.pre_init(44100, -16, 2, 2048)
@@ -94,13 +87,4 @@ class Interaction: #класс действий
         pygame.mixer.music.load('sound/theme.mp3')
         pygame.mixer.music.play(10)
 
-    def check_win(self):# проверка победы
-        if not len([obj for obj in self.sprites.list_of_objects if obj.flag == 'npc' and not obj.is_dead]):
-            pygame.mixer.music.stop()
-            pygame.mixer.music.load('sound/win.mp3')
-            pygame.mixer.music.play()
-            while True:
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        exit()
-                self.drawing.win()
+    

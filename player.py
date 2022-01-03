@@ -91,13 +91,13 @@ class Player:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            """if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1 and not self.shot:
-                    self.shot = True
+                    self.shot = True"""
 
     def mouse_control(self):
         if pygame.mouse.get_focused():
             difference = pygame.mouse.get_pos()[0] - HALF_WIDTH
             pygame.mouse.set_pos((HALF_WIDTH, HALF_HEIGHT))
-            self.angle += difference * self.sensitivity
+            self.angle += difference * self.sensitivity  
 

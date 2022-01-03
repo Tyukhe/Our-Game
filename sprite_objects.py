@@ -79,38 +79,7 @@ class Sprites:
                 'obj_action': deque(
                     [pygame.image.load(f'sprites/devil/anim/{i}.png').convert_alpha() for i in range(9)]),
             },
-            'sprite_door_v': {
-                'sprite': [pygame.image.load(f'sprites/doors/door_v/{i}.png').convert_alpha() for i in range(16)],
-                'viewing_angles': True,
-                'shift': 0.1,
-                'scale': (2.6, 1.2),
-                'side': 100,
-                'animation': [],
-                'death_animation': [],
-                'is_dead': 'immortal',
-                'dead_shift': 0,
-                'animation_dist': 0,
-                'animation_speed': 0,
-                'blocked': True,
-                'flag': 'door_h',
-                'obj_action': []
-            },
-            'sprite_door_h': {
-                'sprite': [pygame.image.load(f'sprites/doors/door_h/{i}.png').convert_alpha() for i in range(16)],
-                'viewing_angles': True,
-                'shift': 0.1,
-                'scale': (2.6, 1.2),
-                'side': 100,
-                'animation': [],
-                'death_animation': [],
-                'is_dead': 'immortal',
-                'dead_shift': 0,
-                'animation_dist': 0,
-                'animation_speed': 0,
-                'blocked': True,
-                'flag': 'door_v',
-                'obj_action': []
-            },
+            
             'npc_soldier0': {
                 'sprite': [pygame.image.load(f'sprites/npc/soldier0/base/{i}.png').convert_alpha() for i in range(8)],
                 'viewing_angles': True,
@@ -137,8 +106,6 @@ class Sprites:
             SpriteObject(self.sprite_parameters['sprite_pin'], (8.7, 2.5)),
             SpriteObject(self.sprite_parameters['npc_devil'], (7, 4)),
             SpriteObject(self.sprite_parameters['sprite_flame'], (8.6, 5.6)),
-            SpriteObject(self.sprite_parameters['sprite_door_v'], (3.5, 3.5)),
-            SpriteObject(self.sprite_parameters['sprite_door_h'], (1.5, 4.5)),
             SpriteObject(self.sprite_parameters['npc_soldier0'], (2.5, 1.5)),
             SpriteObject(self.sprite_parameters['npc_soldier0'], (5.51, 1.5)),
             SpriteObject(self.sprite_parameters['npc_soldier0'], (6.61, 2.92)),
@@ -149,17 +116,10 @@ class Sprites:
         ]
 
     @property
-    def sprite_shot(self): # выпор того в кого попали оружием
+    def sprite_shot(self): # выбор того в кого попали оружием
         return min([obj.is_on_fire for obj in self.list_of_objects], default=(float('inf'), 0))
 
-    @property
-    def blocked_doors(self):# заблоченные двери
-        blocked_doors = Dict.empty(key_type=types.UniTuple(int32, 2), value_type=int32)
-        for obj in self.list_of_objects:
-            if obj.flag in {'door_h', 'door_v'} and obj.blocked:
-                i, j = mapping(obj.x, obj.y)
-                blocked_doors[(i, j)] = 0
-        return blocked_doors
+    
 
 
 class SpriteObject:
@@ -184,8 +144,6 @@ class SpriteObject:
         self.dead_animation_count = 0
         self.animation_count = 0
         self.npc_action_trigger = False
-        self.door_open_trigger = False
-        self.door_prev_pos = self.y if self.flag == 'door_h' else self.x
         self.delete = False
         if self.viewing_angles:
             if len(self.object) == 8:
@@ -234,10 +192,7 @@ class SpriteObject:
 
             # logic for doors, npc, decor
             if self.flag in {'door_h', 'door_v'}:
-                if self.door_open_trigger:
-                    self.open_door()
-                self.object = self.visible_sprite()
-                sprite_object = self.sprite_animation()
+                pass
             else:
                 if self.is_dead and self.is_dead != 'immortal':
                     sprite_object = self.dead_animation()
@@ -298,12 +253,3 @@ class SpriteObject:
             self.animation_count = 0
         return sprite_object
 
-    def open_door(self):
-        if self.flag == 'door_h':
-            self.y -= 3
-            if abs(self.y - self.door_prev_pos) > TILE:
-                self.delete = True
-        elif self.flag == 'door_v':
-            self.x -= 3
-            if abs(self.x - self.door_prev_pos) > TILE:
-                self.delete = True

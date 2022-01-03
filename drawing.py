@@ -14,16 +14,12 @@ class Drawing: # класс отрисовки всего
         self.player = player
         self.clock = clock
         self.font = pygame.font.SysFont('Arial', 36, bold=True)
-        self.font_win = pygame.font.Font('font/font.ttf', 144)
         self.textures = {1: pygame.image.load('img/wall3.png').convert(), # текстурки для стен карты
                          2: pygame.image.load('img/wall4.png').convert(),
                          3: pygame.image.load('img/wall5.png').convert(),
                          4: pygame.image.load('img/wall6.png').convert(),
                          'S': pygame.image.load('img/sky2.png').convert()
                          }
-        # (переменные)меню, запуск, рисунок меню (заменим)
-        self.menu_trigger = True
-        self.menu_picture = pygame.image.load('img/bg.jpg').convert()
         # настройки оружия (переделаем для 2 типов оружия)
         self.weapon_base_sprite = pygame.image.load('sprites/weapons/shotgun/base/0.png').convert_alpha()
         self.weapon_shot_animation = deque([pygame.image.load(f'sprites/weapons/shotgun/shot/{i}.png').convert_alpha()
@@ -99,58 +95,4 @@ class Drawing: # класс отрисовки всего
             self.sfx_length_count += 1
             self.sfx.rotate(-1)
 
-    def win(self): # надпись победы
-        render = self.font_win.render('YOU WIN!!!', 1, (randrange(40, 120), 0, 0))
-        rect = pygame.Rect(0, 0, 1000, 300)
-        rect.center = HALF_WIDTH, HALF_HEIGHT
-        pygame.draw.rect(self.sc, BLACK, rect, border_radius=50)
-        self.sc.blit(render, (rect.centerx - 430, rect.centery - 140))
-        pygame.display.flip()
-        self.clock.tick(15)
-
-    def menu(self): # начальное меню
-        x = 0
-        button_font = pygame.font.Font('font/font.ttf', 72)
-        label_font = pygame.font.Font('font/font1.otf', 400)
-        start = button_font.render('START', 1, pygame.Color('lightgray'))
-        button_start = pygame.Rect(0, 0, 400, 150)
-        button_start.center = HALF_WIDTH, HALF_HEIGHT
-        exit = button_font.render('EXIT', 1, pygame.Color('lightgray'))
-        button_exit = pygame.Rect(0, 0, 400, 150)
-        button_exit.center = HALF_WIDTH, HALF_HEIGHT + 200
-
-        while self.menu_trigger:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-
-            self.sc.blit(self.menu_picture, (0, 0), (x % WIDTH, HALF_HEIGHT, WIDTH, HEIGHT))
-            x += 1
-
-            pygame.draw.rect(self.sc, BLACK, button_start, border_radius=25, width=10)
-            self.sc.blit(start, (button_start.centerx - 130, button_start.centery - 70))
-
-            pygame.draw.rect(self.sc, BLACK, button_exit, border_radius=25, width=10)
-            self.sc.blit(exit, (button_exit.centerx - 85, button_exit.centery - 70))
-
-            color = randrange(40)
-            label = label_font.render('DOOMPy', 1, (color, color, color))
-            self.sc.blit(label, (15, -30))
-
-            mouse_pos = pygame.mouse.get_pos()
-            mouse_click = pygame.mouse.get_pressed()
-            if button_start.collidepoint(mouse_pos):
-                pygame.draw.rect(self.sc, BLACK, button_start, border_radius=25)
-                self.sc.blit(start, (button_start.centerx - 130, button_start.centery - 70))
-                if mouse_click[0]:
-                    self.menu_trigger = False
-            elif button_exit.collidepoint(mouse_pos):
-                pygame.draw.rect(self.sc, BLACK, button_exit, border_radius=25)
-                self.sc.blit(exit, (button_exit.centerx - 85, button_exit.centery - 70))
-                if mouse_click[0]:
-                    pygame.quit()
-                    sys.exit()
-
-            pygame.display.flip()
-            self.clock.tick(20)
+    
