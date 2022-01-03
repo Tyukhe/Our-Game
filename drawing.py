@@ -14,15 +14,16 @@ class Drawing: # класс отрисовки всего
         self.player = player
         self.clock = clock
         self.font = pygame.font.SysFont('Arial', 36, bold=True)
-        self.textures = {1: pygame.image.load('img/wall3.png').convert(), # текстурки для стен карты
-                         2: pygame.image.load('img/wall4.png').convert(),
-                         3: pygame.image.load('img/wall5.png').convert(),
-                         4: pygame.image.load('img/wall6.png').convert(),
-                         'S': pygame.image.load('img/sky2.png').convert()
+        self.textures = {1: pygame.image.load('data/img/Wall_Test1.png').convert(), # текстурки для стен карты
+                         2: pygame.image.load('data/img/Wall_Test2.png').convert(),
+                         3: pygame.image.load('data/img/Wall_Test3.png').convert(),
+                         4: pygame.image.load('data/img/Wall_Test4.png').convert(),
+                         5: pygame.image.load('data/img/Wall_Test5.png').convert(),
+                         'S': pygame.image.load('data/img/Sky_Test.png').convert()
                          }
         # настройки оружия (переделаем для 2 типов оружия)
-        self.weapon_base_sprite = pygame.image.load('sprites/weapons/shotgun/base/0.png').convert_alpha()
-        self.weapon_shot_animation = deque([pygame.image.load(f'sprites/weapons/shotgun/shot/{i}.png').convert_alpha()
+        self.weapon_base_sprite = pygame.image.load('data/sprites/weapons/shotgun/base/0.png').convert_alpha()
+        self.weapon_shot_animation = deque([pygame.image.load(f'data/sprites/weapons/shotgun/shot/{i}.png').convert_alpha()
                                             for i in range(20)])
         self.weapon_rect = self.weapon_base_sprite.get_rect()
         self.weapon_pos = (HALF_WIDTH - self.weapon_rect.width // 2, HEIGHT - self.weapon_rect.height)
@@ -31,9 +32,9 @@ class Drawing: # класс отрисовки всего
         self.shot_animation_speed = 3
         self.shot_animation_count = 0
         self.shot_animation_trigger = True
-        self.shot_sound = pygame.mixer.Sound('sound/shotgun.wav')
+        self.shot_sound = pygame.mixer.Sound('data/sound/shotgun.wav')
         # параметры выстрела(тоже для 2 сделаем)
-        self.sfx = deque([pygame.image.load(f'sprites/weapons/sfx/{i}.png').convert_alpha() for i in range(9)])
+        self.sfx = deque([pygame.image.load(f'data/sprites/weapons/sfx/{i}.png').convert_alpha() for i in range(9)])
         self.sfx_length_count = 0
         self.sfx_length = len(self.sfx)
 

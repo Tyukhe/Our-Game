@@ -42,7 +42,8 @@ HALF_TEXTURE_HEIGHT = TEXTURE_HEIGHT // 2
 TEXTURE_SCALE = TEXTURE_WIDTH // TILE
 
 # player settings
-player_pos = (HALF_WIDTH // 4, HALF_HEIGHT - 50)
+#player_pos = (HALF_WIDTH // 4, HALF_HEIGHT - 50)
+player_pos = (HALF_WIDTH, HALF_HEIGHT)
 player_angle = 0
 player_speed = 3
 

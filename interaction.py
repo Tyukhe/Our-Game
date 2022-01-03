@@ -44,7 +44,7 @@ class Interaction: #класс действий
         self.player = player
         self.sprites = sprites
         self.drawing = drawing
-        self.pain_sound = pygame.mixer.Sound('sound/pain.wav')
+        self.pain_sound = pygame.mixer.Sound('data/sound/pain.wav')
 
     def interaction_objects(self): #засчет выстрела
         if self.player.shot and self.drawing.shot_animation_trigger:
@@ -84,7 +84,7 @@ class Interaction: #класс действий
     def play_music(self): #играть музычку
         pygame.mixer.pre_init(44100, -16, 2, 2048)
         pygame.mixer.init()
-        pygame.mixer.music.load('sound/theme.mp3')
+        pygame.mixer.music.load('data/sound/Music_Test.mp3')
         pygame.mixer.music.play(10)
 
     
