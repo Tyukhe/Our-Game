@@ -4,9 +4,7 @@ from map import world_map
 from ray_casting import mapping
 import math
 import pygame
-from numba import njit
 
-@njit(fastmath=True, cache=True)
 def ray_casting_npc_player(npc_x, npc_y, blocked_doors, world_map, player_pos):# зрение нпс
     ox, oy = player_pos
     xm, ym = mapping(ox, oy)

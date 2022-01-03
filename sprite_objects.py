@@ -2,9 +2,7 @@ import pygame
 from settings import *
 from collections import deque
 from ray_casting import mapping
-from numba.core import types
-from numba.typed import Dict
-from numba import int32
+
 
 
 class Sprites:
@@ -154,7 +152,7 @@ class Sprites:
 
     @property
     def blocked_doors(self):# заблоченные двери
-        blocked_doors = Dict.empty(key_type=types.UniTuple(int32, 2), value_type=int32)
+        blocked_doors = {}
         for obj in self.list_of_objects:
             if obj.flag in {'door_h', 'door_v'} and obj.blocked:
                 i, j = mapping(obj.x, obj.y)

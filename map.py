@@ -1,9 +1,7 @@
 # тут мутки с картой(наверное здесь я и сделаю подджерку своих карт)
 from settings import *
 import pygame
-from numba.core import types
-from numba.typed import Dict# кастомный словарь от numba т.к. с обычным не умеет работать
-from numba import int32
+
 
 _ = False
 matrix_map = [
@@ -27,7 +25,7 @@ matrix_map = [
 
 WORLD_WIDTH = len(matrix_map[0]) * TILE
 WORLD_HEIGHT = len(matrix_map) * TILE
-world_map = Dict.empty(key_type=types.UniTuple(int32, 2), value_type=int32)# здесь инфа о стенах хранится
+world_map = {}# здесь инфа о стенах хранится
 mini_map = set()
 collision_walls = []
 for j, row in enumerate(matrix_map):# здесь инфа о стенах добавляется
