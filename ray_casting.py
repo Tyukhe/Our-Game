@@ -8,7 +8,7 @@ from map import world_map, WORLD_WIDTH, WORLD_HEIGHT
 def mapping(a, b):
     return int(a // TILE) * TILE, int(b // TILE) * TILE
 
-#@njit(fastmath=True, cache=True)
+#@njit(fastmath=True, cache=True) не включать
 def ray_casting(player_pos, player_angle, world_map):
     casted_walls = []
     ox, oy = player_pos
