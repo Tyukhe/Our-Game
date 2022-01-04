@@ -6,6 +6,7 @@ from map import mini_map
 from collections import deque
 from random import  randrange
 import sys
+from map import map_now
 
 class Drawing: # класс отрисовки всего
     def __init__(self, sc, sc_map, player, clock):
@@ -14,19 +15,19 @@ class Drawing: # класс отрисовки всего
         self.player = player
         self.clock = clock
         self.font = pygame.font.SysFont('Arial', 36, bold=True)
-        self.font_win = pygame.font.Font('data/font/font.ttf', 144)
-        self.textures = {1: pygame.image.load('data/img/wall3.png').convert(), # текстурки для стен карты
-                         2: pygame.image.load('data/img/wall4.png').convert(),
-                         3: pygame.image.load('data/img/wall5.png').convert(),
-                         4: pygame.image.load('data/img/wall6.png').convert(),
-                         'S': pygame.image.load('data/img/sky2.png').convert()
+        self.font_win = pygame.font.Font(F'data/maps/{map_now[0]}/font/font.ttf', 144)
+        self.textures = {1: pygame.image.load(F'data/maps/{map_now[0]}/img/wall3.png').convert(), # текстурки для стен карты
+                         2: pygame.image.load(F'data/maps/{map_now[0]}/img/wall4.png').convert(),
+                         3: pygame.image.load(F'data/maps/{map_now[0]}/img/wall5.png').convert(),
+                         4: pygame.image.load(F'data/maps/{map_now[0]}/img/wall6.png').convert(),
+                         'S': pygame.image.load(F'data/maps/{map_now[0]}/img/sky2.png').convert()
                          }
         # (переменные)меню, запуск, рисунок меню (заменим)
         self.menu_trigger = True
-        self.menu_picture = pygame.image.load('data/img/bg.jpg').convert()
+        self.menu_picture = pygame.image.load(F'data/maps/{map_now[0]}/img/bg.jpg').convert()
         # настройки оружия (переделаем для 2 типов оружия)
-        self.weapon_base_sprite = pygame.image.load('data/sprites/weapons/shotgun/base/0.png').convert_alpha()
-        self.weapon_shot_animation = deque([pygame.image.load(f'data/sprites/weapons/shotgun/shot/{i}.png').convert_alpha()
+        self.weapon_base_sprite = pygame.image.load(F'data/maps/{map_now[0]}/sprites/weapons/shotgun/base/0.png').convert_alpha()
+        self.weapon_shot_animation = deque([pygame.image.load(F'data/maps/{map_now[0]}/sprites/weapons/shotgun/shot/{i}.png').convert_alpha()
                                             for i in range(20)])
         self.weapon_rect = self.weapon_base_sprite.get_rect()
         self.weapon_pos = (HALF_WIDTH - self.weapon_rect.width // 2, HEIGHT - self.weapon_rect.height)
@@ -35,9 +36,9 @@ class Drawing: # класс отрисовки всего
         self.shot_animation_speed = 3
         self.shot_animation_count = 0
         self.shot_animation_trigger = True
-        self.shot_sound = pygame.mixer.Sound('data/sound/shotgun.wav')
+        self.shot_sound = pygame.mixer.Sound(F'data/maps/{map_now[0]}/sound/shotgun.wav')
         # параметры выстрела(тоже для 2 сделаем)
-        self.sfx = deque([pygame.image.load(f'data/sprites/weapons/sfx/{i}.png').convert_alpha() for i in range(9)])
+        self.sfx = deque([pygame.image.load(F'data/maps/{map_now[0]}/sprites/weapons/sfx/{i}.png').convert_alpha() for i in range(9)])
         self.sfx_length_count = 0
         self.sfx_length = len(self.sfx)
 
@@ -110,8 +111,8 @@ class Drawing: # класс отрисовки всего
 
     def menu(self): # начальное меню
         x = 0
-        button_font = pygame.font.Font('data/font/font.ttf', 72)
-        label_font = pygame.font.Font('data/font/font1.otf', 400)
+        button_font = pygame.font.Font(F'data/maps/{map_now[0]}/font/font.ttf', 72)
+        label_font = pygame.font.Font(F'data/maps/{map_now[0]}/font/font1.otf', 400)
         start = button_font.render('START', 1, pygame.Color('lightgray'))
         button_start = pygame.Rect(0, 0, 400, 150)
         button_start.center = HALF_WIDTH, HALF_HEIGHT
@@ -135,7 +136,7 @@ class Drawing: # класс отрисовки всего
             self.sc.blit(exit, (button_exit.centerx - 85, button_exit.centery - 70))
 
             color = randrange(40)
-            label = label_font.render('DOOMPy', 1, (color, color, color))
+            label = label_font.render('{map_now[0]}', 1, (color, color, color))
             self.sc.blit(label, (15, -30))
 
             mouse_pos = pygame.mouse.get_pos()

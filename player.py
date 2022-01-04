@@ -2,6 +2,7 @@
 from settings import *
 import pygame
 import math
+from map import map_now
 from map import collision_walls
 
 class Player:
@@ -82,6 +83,11 @@ class Player:
             dx = -player_speed * sin_a
             dy = player_speed * cos_a
             self.detect_collision(dx, dy)
+            
+        """ if keys[pygame.K_SPACE]:
+                dx = player_speed * sin_a * 10
+                dy = -player_speed * cos_a
+                self.detect_collision(dx, dy)"""    
 
         if keys[pygame.K_LEFT]:
             self.angle -= 0.02
