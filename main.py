@@ -31,7 +31,7 @@ while True:
     interaction.interaction_objects()
     interaction.npc_action()
     interaction.clear_world()
-    interaction.check_win()
+    #interaction.check_win()
 
     pygame.display.flip()
     clock.tick()

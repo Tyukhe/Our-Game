@@ -128,23 +128,28 @@ class Sprites:
                 'obj_action': deque([pygame.image.load(F'data/maps/{map_now[0]}/sprites/npc/soldier0/action/{i}.png')
                                     .convert_alpha() for i in range(4)])
             },
+            'monster': {
+                'sprite': pygame.image.load(F'data/maps/{map_now[0]}/sprites/monster/base/0.png').convert_alpha(), 
+                'viewing_angles': None,
+                'shift': 0.0,
+                'scale': (1.1, 1.1),
+                'side': 50,
+                'animation': [],
+                'death_animation': deque([pygame.image.load(F'data/maps/{map_now[0]}/sprites/monster/death/{i}.png')
+                                           .convert_alpha() for i in range(10)]),
+                'is_dead': None,
+                'dead_shift': 0.6,
+                'animation_dist': None,
+                'animation_speed': 1,
+                'blocked': True,
+                'flag': 'npc',
+                'obj_action': deque(
+                    [pygame.image.load(F'data/maps/{map_now[0]}/sprites/monster/anim/{i}.png').convert_alpha() for i in range(1)]),
+            },
         }
 
         self.list_of_objects = [ #список ВСЕХ обьектов на карте #TODO сделай чтобы по-нормальному хранить это все в папке с картой
-            SpriteObject(self.sprite_parameters['sprite_barrel'], (7.1, 2.1)),
-            SpriteObject(self.sprite_parameters['sprite_barrel'], (5.9, 2.1)),
-            SpriteObject(self.sprite_parameters['sprite_pin'], (8.7, 2.5)),
-            SpriteObject(self.sprite_parameters['npc_devil'], (7, 4)),
-            SpriteObject(self.sprite_parameters['sprite_flame'], (8.6, 5.6)),
-            SpriteObject(self.sprite_parameters['sprite_door_v'], (3.5, 3.5)),
-            SpriteObject(self.sprite_parameters['sprite_door_h'], (1.5, 4.5)),
-            SpriteObject(self.sprite_parameters['npc_soldier0'], (2.5, 1.5)),
-            SpriteObject(self.sprite_parameters['npc_soldier0'], (5.51, 1.5)),
-            SpriteObject(self.sprite_parameters['npc_soldier0'], (6.61, 2.92)),
-            SpriteObject(self.sprite_parameters['npc_soldier0'], (7.68, 1.47)),
-            SpriteObject(self.sprite_parameters['npc_soldier0'], (8.75, 3.65)),
-            SpriteObject(self.sprite_parameters['npc_soldier0'], (1.27, 11.5)),
-            SpriteObject(self.sprite_parameters['npc_soldier0'], (1.26, 8.29)),
+            SpriteObject(self.sprite_parameters['monster'], (7, 4)),
         ]
 
     @property
@@ -242,6 +247,8 @@ class SpriteObject:
                     sprite_object = self.dead_animation()
                     shift = half_sprite_height * self.dead_shift
                     sprite_height = int(sprite_height / 1.3)
+#TODO self.delete = True                          
+
                 elif self.npc_action_trigger:
                     sprite_object = self.npc_in_action()
                 else:
@@ -283,6 +290,7 @@ class SpriteObject:
             if self.dead_animation_count < self.animation_speed:
                 self.dead_sprite = self.death_animation[0]
                 self.dead_animation_count += 1
+                
             else:
                 self.dead_sprite = self.death_animation.popleft()
                 self.dead_animation_count = 0
