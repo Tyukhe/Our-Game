@@ -4,7 +4,9 @@ from map import world_map
 from ray_casting import mapping
 import math
 import pygame
+from map import change
 from map import map_now
+
 
 #from numba import njit
 
@@ -48,7 +50,7 @@ class Interaction: #класс действий
         self.player = player
         self.sprites = sprites
         self.drawing = drawing
-        self.pain_sound = pygame.mixer.Sound(F'data/maps/{map_now[0]}/sound/pain.wav')
+        self.pain_sound = pygame.mixer.Sound(F'data/sound/pain.wav')
 
     def interaction_objects(self): #засчет выстрела
         if self.player.shot and self.drawing.shot_animation_trigger:
@@ -93,18 +95,20 @@ class Interaction: #класс действий
     def play_music(self): #играть музычку
         pygame.mixer.pre_init(44100, -16, 2, 2048)
         pygame.mixer.init()
-        pygame.mixer.music.load(F'data/maps/{map_now[0]}/sound/theme.mp3')
+        pygame.mixer.music.load(F'data/maps/{map_now[0]}/music/theme.mp3')
         pygame.mixer.music.play(10)
 
     def check_win(self):# проверка победы
         if not len([obj for obj in self.sprites.list_of_objects if obj.flag == 'npc' and not obj.is_dead]):
-            pygame.mixer.music.stop()
-            pygame.mixer.music.load(F'data/maps/{map_now[0]}/sound/win.mp3')
+            """pygame.mixer.music.stop()
+            pygame.mixer.music.load(F'data/sound/win.mp3')
             pygame.mixer.music.play()
             while True:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         exit()
-                self.drawing.win()
+                self.drawing.win()"""
                 
+            return  "shop"
+        
   #TODO  def dell_me self.delete = True  

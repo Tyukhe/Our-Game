@@ -16,15 +16,18 @@ class Drawing: # класс отрисовки всего
         self.clock = clock
         self.font = pygame.font.SysFont('Arial', 36, bold=True)
         self.font_win = pygame.font.Font(F'data/font/font.ttf', 144)
-        self.textures = {1: pygame.image.load(F'data/maps/{map_now[0]}/img/wall3.png').convert(), # текстурки для стен карты
-                         2: pygame.image.load(F'data/maps/{map_now[0]}/img/wall4.png').convert(),
-                         3: pygame.image.load(F'data/maps/{map_now[0]}/img/wall5.png').convert(),
-                         4: pygame.image.load(F'data/maps/{map_now[0]}/img/wall6.png').convert(),
-                         'S': pygame.image.load(F'data/maps/{map_now[0]}/img/sky2.png').convert()
-                         }
+        try:
+            self.textures = {1: pygame.image.load(F'data/maps/{map_now[0]}/textures/1.png').convert(), # текстурки для стен карты
+                            2: pygame.image.load(F'data/maps/{map_now[0]}/textures/2.png').convert(),
+                            'S': pygame.image.load(F'data/maps/{map_now[0]}/textures/sky.png').convert()
+                            }
+        except: 
+            self.textures = {1: pygame.image.load(F'data/maps/{map_now[0]}/textures/1.png').convert(), # текстурки для стен карты
+                            'S': pygame.image.load(F'data/maps/{map_now[0]}/textures/sky.png').convert(),
+                            }
         # (переменные)меню, запуск, рисунок меню (заменим)
         self.menu_trigger = True
-        self.menu_picture = pygame.image.load(F'data/maps/{map_now[0]}/img/bg.jpg').convert()
+        self.menu_picture = pygame.image.load(F'data/images/bg.jpg').convert()
         # настройки оружия (переделаем для 2 типов оружия)
         self.weapon_base_sprite = pygame.image.load(F'data/weapons/shotgun/base/0.png').convert_alpha()
         self.weapon_shot_animation = deque([pygame.image.load(F'data/weapons/shotgun/shot/{i}.png').convert_alpha()
@@ -36,7 +39,7 @@ class Drawing: # класс отрисовки всего
         self.shot_animation_speed = 2
         self.shot_animation_count = 0
         self.shot_animation_trigger = True
-        self.shot_sound = pygame.mixer.Sound(F'data/maps/{map_now[0]}/sound/shotgun.wav')
+        self.shot_sound = pygame.mixer.Sound(F'data/sound/shotgun.wav')
         # параметры выстрела(тоже для 2 сделаем)
         self.sfx = deque([pygame.image.load(F'data/weapons/sfx/{i}.png').convert_alpha() for i in range(9)])
         self.sfx_length_count = 0

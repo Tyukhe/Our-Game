@@ -6,6 +6,10 @@ print(f.closed)
 with open(F'data/maps/{map_now[0]}/map.txt', 'rt') as f:
     matrix_map = f.readlines()
 print(f.closed)
+def change():
+    map_now = ["arena"]
+    print(map_now)
+    
 _ = False
 matrix_map = list(map(lambda x: x.replace(" ", ""), matrix_map))
 matrix_map = list(map(lambda x: x.replace(",", ""), matrix_map))
@@ -26,6 +30,8 @@ for j, row in enumerate(matrix_map):# здесь инфа о стенах доб
             char = int(char)
             mini_map.add((i * MAP_TILE, j * MAP_TILE))
             collision_walls.append(pygame.Rect(i * TILE, j * TILE, TILE, TILE))
-            if char :
+            if char == 1:
+                world_map[(i * TILE, j * TILE)] = char
+            elif char == 2:
                 world_map[(i * TILE, j * TILE)] = char
             
