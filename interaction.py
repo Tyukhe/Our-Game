@@ -4,7 +4,6 @@ from map import world_map
 from ray_casting import mapping
 import math
 import pygame
-from map import change
 from map import map_now
 
 

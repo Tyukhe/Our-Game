@@ -6,16 +6,13 @@ print(f.closed)
 with open(F'data/maps/{map_now[0]}/map.txt', 'rt') as f:
     matrix_map = f.readlines()
 print(f.closed)
-def change():
-    map_now = ["arena"]
-    print(map_now)
+
     
 _ = False
 matrix_map = list(map(lambda x: x.replace(" ", ""), matrix_map))
 matrix_map = list(map(lambda x: x.replace(",", ""), matrix_map))
 matrix_map = list(map(lambda x: x.replace("\n", ""), matrix_map))
 matrix_map = list(map(lambda x: list(x), matrix_map))
-print(matrix_map)
 
 # карта в таком формате будет
 

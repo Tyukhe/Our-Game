@@ -18,8 +18,9 @@ drawing.menu()
 pygame.mouse.set_visible(False)
 interaction.play_music()
 print(map_now)
-while map_now[0] == "shop":
 
+
+while True:
     player.movement()
     drawing.background(player.angle)
     walls, wall_shot = ray_casting_walls(player, drawing.textures)
@@ -35,19 +36,3 @@ while map_now[0] == "shop":
 
     pygame.display.flip()
     clock.tick()
-    if map_now[0] != "shop":
-        break
-    print(map_now)
-
-while True:
-    player.movement()
-    drawing.background(player.angle)
-    walls, wall_shot = ray_casting_walls(player, drawing.textures)
-    drawing.world(walls + [obj.object_locate(player) for obj in sprites.list_of_objects])
-    drawing.fps(clock)
-    drawing.mini_map(player)
-    drawing.player_weapon([wall_shot, sprites.sprite_shot])
-
-    interaction.interaction_objects()
-    interaction.npc_action()
-    interaction.clear_world()
