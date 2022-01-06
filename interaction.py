@@ -106,3 +106,5 @@ class Interaction: #класс действий
                     if event.type == pygame.QUIT:
                         exit()
                 self.drawing.win()
+                
+  #TODO  def dell_me self.delete = True  
