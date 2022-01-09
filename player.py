@@ -89,14 +89,13 @@ class Player:
                 dy = -player_speed * cos_a
                 self.detect_collision(dx, dy)"""    
 
-        if keys[pygame.K_LEFT]:
+        """if keys[pygame.K_LEFT]:
             self.angle -= 0.02
         if keys[pygame.K_RIGHT]:
-            self.angle += 0.02
+            self.angle += 0.02"""
          #стрельба стрелкой   
-        if keys[pygame.K_UP]:
-            if not self.shot:
-                self.shot = True
+        """if pygame.event== pygame.KEYDOWN and keys[pygame.K_UP]:"""
+            
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -104,8 +103,34 @@ class Player:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1 and not self.shot:
                     self.shot = True
+            """if event.type == pygame.KEYDOWN:
+                if not self.shot and keys[pygame.K_UP]:
+                    self.shot = True"""
             
-
+    def change_level(self):
+        
+        if map_now[0] == "shop":
+            map_now[0] = "arena"
+            self.x = 1550
+            self.y = 750
+        elif map_now[0] == "arena":
+            map_now[0] = "limb"
+            self.x = 2750
+            self.y = 850
+        elif map_now[0] == "limb":
+            map_now[0] = "labyrinth"
+            self.x = 3350
+            self.y = 150
+        elif map_now[0] == "labyrinth":
+            map_now[0] = "cave"
+            self.x = 4850
+            self.y = 750
+        elif map_now[0] == "cave":
+            map_now[0] = "title"
+            self.x = 1250
+            self.y = 150
+       
+        print(map_now[0])
     def mouse_control(self):
         if pygame.mouse.get_focused():
             difference = pygame.mouse.get_pos()[0] - HALF_WIDTH

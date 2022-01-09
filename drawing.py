@@ -16,18 +16,23 @@ class Drawing: # класс отрисовки всего
         self.clock = clock
         self.font = pygame.font.SysFont('Arial', 36, bold=True)
         self.font_win = pygame.font.Font(F'data/font/font.ttf', 144)
-        try:
-            self.textures = {1: pygame.image.load(F'data/maps/{map_now[0]}/textures/1.png').convert(), # текстурки для стен карты
-                            2: pygame.image.load(F'data/maps/{map_now[0]}/textures/2.png').convert(),
-                            'S': pygame.image.load(F'data/maps/{map_now[0]}/textures/sky.png').convert()
-                            }
-        except: 
-            self.textures = {1: pygame.image.load(F'data/maps/{map_now[0]}/textures/1.png').convert(), # текстурки для стен карты
-                            'S': pygame.image.load(F'data/maps/{map_now[0]}/textures/sky.png').convert(),
-                            }
+        
+        self.textures = {1: pygame.image.load(F'data/textures/1.png').convert(), # текстурки для стен карты
+                        2: pygame.image.load(F'data/textures/2.png').convert(),
+                        3: pygame.image.load(F'data/textures/3-1.png').convert(), # текстурки для стен карты
+                        4: pygame.image.load(F'data/textures/3-2.png').convert(),
+                        5: pygame.image.load(F'data/textures/4.png').convert(), # текстурки для стен карты
+                        6: pygame.image.load(F'data/textures/5.png').convert(),
+                        'S1': pygame.image.load(F'data/textures/sky1.png').convert(),
+                        'S2': pygame.image.load(F'data/textures/sky2.png').convert(),
+                        'S3': pygame.image.load(F'data/textures/sky3.png').convert(),
+                        'S4': pygame.image.load(F'data/textures/sky4.png').convert(),
+                        'S5': pygame.image.load(F'data/textures/sky5.png').convert(),
+                        }
+        
         # (переменные)меню, запуск, рисунок меню (заменим)
         self.menu_trigger = True
-        self.menu_picture = pygame.image.load(F'data/images/bg.jpg').convert()
+        self.menu_picture = pygame.image.load(F'data/textures/bg.jpg').convert()
         # настройки оружия (переделаем для 2 типов оружия)
         self.weapon_base_sprite = pygame.image.load(F'data/weapons/shotgun/base/0.png').convert_alpha()
         self.weapon_shot_animation = deque([pygame.image.load(F'data/weapons/shotgun/shot/{i}.png').convert_alpha()
@@ -46,11 +51,26 @@ class Drawing: # класс отрисовки всего
         self.sfx_length = len(self.sfx)
 
     def background(self, angle): # тут рисуется небо и пол
+        if map_now[0] == "shop":
+            now = "S1"
+            now_floor = DARKGRAY
+        elif map_now[0] == "arena":
+            now = "S2"
+            now_floor = RED
+        elif map_now[0] == "limb":
+            now = "S3"
+            now_floor = WHITE
+        elif map_now[0] == "labyrinth":
+            now = "S4"
+            now_floor = DARKORANGE
+        elif map_now[0] == "cave":
+            now = "S5"
+            now_floor = DARKGRAY
         sky_offset = -10 * math.degrees(angle) % WIDTH
-        self.sc.blit(self.textures['S'], (sky_offset, 0))
-        self.sc.blit(self.textures['S'], (sky_offset - WIDTH, 0))
-        self.sc.blit(self.textures['S'], (sky_offset + WIDTH, 0))
-        pygame.draw.rect(self.sc, DARKGRAY, (0, HALF_HEIGHT, WIDTH, HALF_HEIGHT))
+        self.sc.blit(self.textures[now], (sky_offset, 0))
+        self.sc.blit(self.textures[now], (sky_offset - WIDTH, 0))
+        self.sc.blit(self.textures[now], (sky_offset + WIDTH, 0))
+        pygame.draw.rect(self.sc, now_floor, (0, HALF_HEIGHT, WIDTH, HALF_HEIGHT))
 
     def world(self, world_objects): #как я понял, это отрисовка обьектов и нпс
         for obj in sorted(world_objects, key=lambda n: n[0], reverse=True):

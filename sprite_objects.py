@@ -146,10 +146,29 @@ class Sprites:
                 'obj_action': deque(
                     [pygame.image.load(F'data/sprites/monster/anim/{i}.png').convert_alpha() for i in range(1)]),
             },
+            'sprite_level_changer': {
+                'sprite': pygame.image.load(F'data/sprites/levelchanger/Door.png').convert_alpha(),
+                'viewing_angles': None,
+                'shift': 0.1,
+                'scale': (0.5, 1.2),
+                'side': 100,
+                'animation': [],
+                'death_animation': [],
+                'is_dead': 'immortal',
+                'dead_shift': 0,
+                'animation_dist': 0,
+                'animation_speed': 0,
+                'blocked': True,
+                'flag': 'level_changer',
+                'obj_action': []},
         }
 
         self.list_of_objects = [ #список ВСЕХ обьектов на карте #TODO сделай чтобы по-нормальному хранить это все в папке с картой
             SpriteObject(self.sprite_parameters['monster'], (7, 4)),
+            SpriteObject(self.sprite_parameters['sprite_level_changer'], (9, 7)),
+            SpriteObject(self.sprite_parameters['sprite_level_changer'], (13.5, 7.5)),
+            SpriteObject(self.sprite_parameters['sprite_level_changer'], (27, 3)),
+            SpriteObject(self.sprite_parameters['sprite_level_changer'], (44, 13)),
         ]
 
     @property

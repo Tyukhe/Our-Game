@@ -18,6 +18,7 @@ drawing.menu()
 pygame.mouse.set_visible(False)
 interaction.play_music()
 print(map_now)
+print(player_pos)
 
 
 while True:
@@ -29,10 +30,10 @@ while True:
     drawing.mini_map(player)
     drawing.player_weapon([wall_shot, sprites.sprite_shot])
 
-    interaction.interaction_objects()
+    interaction.interaction_objects(player)
     interaction.npc_action()
     interaction.clear_world()
-    interaction.check_win()
+    """interaction.check_win(player)"""
 
     pygame.display.flip()
     clock.tick()

@@ -5,6 +5,7 @@ from ray_casting import mapping
 import math
 import pygame
 from map import map_now
+import player
 
 
 #from numba import njit
@@ -51,7 +52,7 @@ class Interaction: #класс действий
         self.drawing = drawing
         self.pain_sound = pygame.mixer.Sound(F'data/sound/pain.wav')
 
-    def interaction_objects(self): #засчет выстрела
+    def interaction_objects(self, plyr): #засчет выстрела
         if self.player.shot and self.drawing.shot_animation_trigger:
             for obj in sorted(self.sprites.list_of_objects, key=lambda obj: obj.distance_to_sprite):
                 if obj.is_on_fire[1]:
@@ -67,6 +68,10 @@ class Interaction: #класс действий
                     if obj.flag in {'door_h', 'door_v'} and obj.distance_to_sprite < TILE:
                         obj.door_open_trigger = True
                         obj.blocked = None
+                    if obj.flag in {"level_changer"} and obj.distance_to_sprite < TILE:
+                        player.Player.change_level(plyr)
+                        pass
+                        
                     break
 
     def npc_action(self): #ии нпс(действие если видит игрока)
@@ -96,9 +101,8 @@ class Interaction: #класс действий
         pygame.mixer.init()
         pygame.mixer.music.load(F'data/maps/{map_now[0]}/music/theme.mp3')
         pygame.mixer.music.play(10)
-
-    def check_win(self):# проверка победы
-        if not len([obj for obj in self.sprites.list_of_objects if obj.flag == 'npc' and not obj.is_dead]):
+    def check_win(self, plyr):# проверка победы
+        if not len([obj for obj in self.sprites.list_of_objects if obj.flag == 'npc' and not obj.is_dead]) :
             """pygame.mixer.music.stop()
             pygame.mixer.music.load(F'data/sound/win.mp3')
             pygame.mixer.music.play()
@@ -108,6 +112,8 @@ class Interaction: #класс действий
                         exit()
                 self.drawing.win()"""
                 
-            return  "shop"
+            player.Player.change_level(plyr)
+            map_now[0] = "shop"
+            
         
   #TODO  def dell_me self.delete = True  
