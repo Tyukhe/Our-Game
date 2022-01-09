@@ -68,7 +68,7 @@ class Interaction: #класс действий
                     if obj.flag in {'door_h', 'door_v'} and obj.distance_to_sprite < TILE:
                         obj.door_open_trigger = True
                         obj.blocked = None
-                    if obj.flag in {"level_changer"} and obj.distance_to_sprite < TILE:
+                    if obj.flag in {"level_changer"} and obj.distance_to_sprite < TILE * 2:
                         player.Player.change_level(plyr)
                         pass
                         
@@ -99,7 +99,7 @@ class Interaction: #класс действий
     def play_music(self): #играть музычку
         pygame.mixer.pre_init(44100, -16, 2, 2048)
         pygame.mixer.init()
-        pygame.mixer.music.load(F'data/maps/{map_now[0]}/music/theme.mp3')
+        pygame.mixer.music.load(F'data/music/BrokenDream.mp3')
         pygame.mixer.music.play(10)
     def check_win(self, plyr):# проверка победы
         if not len([obj for obj in self.sprites.list_of_objects if obj.flag == 'npc' and not obj.is_dead]) :

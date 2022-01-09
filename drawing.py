@@ -32,7 +32,7 @@ class Drawing: # класс отрисовки всего
         
         # (переменные)меню, запуск, рисунок меню (заменим)
         self.menu_trigger = True
-        self.menu_picture = pygame.image.load(F'data/textures/bg.jpg').convert()
+        self.menu_picture = pygame.image.load(F'data/textures/bg.png').convert()
         # настройки оружия (переделаем для 2 типов оружия)
         self.weapon_base_sprite = pygame.image.load(F'data/weapons/shotgun/base/0.png').convert_alpha()
         self.weapon_shot_animation = deque([pygame.image.load(F'data/weapons/shotgun/shot/{i}.png').convert_alpha()
@@ -123,19 +123,19 @@ class Drawing: # класс отрисовки всего
             self.sfx_length_count += 1
             self.sfx.rotate(-1)
 
-    def win(self): # надпись победы
+    """def win(self): # надпись победы
         render = self.font_win.render('YOU WIN!!!', 1, (randrange(40, 120), 0, 0))
         rect = pygame.Rect(0, 0, 1000, 300)
         rect.center = HALF_WIDTH, HALF_HEIGHT
         pygame.draw.rect(self.sc, BLACK, rect, border_radius=50)
         self.sc.blit(render, (rect.centerx - 430, rect.centery - 140))
         pygame.display.flip()
-        self.clock.tick(15)
+        self.clock.tick(15)"""
 
     def menu(self): # начальное меню
         x = 0
         button_font = pygame.font.Font(F'data/font/font.ttf', 72)
-        label_font = pygame.font.Font(F'data/font/font1.otf', 400)
+        label_font = pygame.font.Font(F'data/font/font1.otf', 150)
         start = button_font.render('START', 1, pygame.Color('lightgray'))
         button_start = pygame.Rect(0, 0, 400, 150)
         button_start.center = HALF_WIDTH, HALF_HEIGHT
@@ -157,10 +157,9 @@ class Drawing: # класс отрисовки всего
 
             pygame.draw.rect(self.sc, BLACK, button_exit, border_radius=25, width=10)
             self.sc.blit(exit, (button_exit.centerx - 85, button_exit.centery - 70))
-
-            color = randrange(40)
-            label = label_font.render('{map_now[0]}', 1, (color, color, color))
-            self.sc.blit(label, (15, -30))
+            
+            label = label_font.render('D.E.M.O. Game', 1, GREEN)
+            self.sc.blit(label, (HALF_WIDTH // 4, 60))
 
             mouse_pos = pygame.mouse.get_pos()
             mouse_click = pygame.mouse.get_pressed()

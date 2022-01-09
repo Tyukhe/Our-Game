@@ -27,7 +27,7 @@ while True:
     walls, wall_shot = ray_casting_walls(player, drawing.textures)
     drawing.world(walls + [obj.object_locate(player) for obj in sprites.list_of_objects])
     drawing.fps(clock)
-    drawing.mini_map(player)
+    #drawing.mini_map(player)
     drawing.player_weapon([wall_shot, sprites.sprite_shot])
 
     interaction.interaction_objects(player)
